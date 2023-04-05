@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2023-04-05T15:48:07.294Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/post/0.html"/>
+    <id>http://example.com/post/0.html</id>
+    <published>2023-04-05T15:47:23.745Z</published>
+    <updated>2023-04-05T15:48:07.294Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="三个经典的缓存模式"><a href="#三个经典的缓存模式" class="headerlink" title="三个经典的缓存模式"></a><strong>三个经典的缓存模式</strong></h2><p>缓存可以提升性能、缓解数据库压力，但是使用缓存也会导致数据<strong>不一致性</strong>的问题。有三种经典的缓存使用模式：</p><ul><li>Cache-Aside Pattern</li><li>Read-Through/Write-through</li><li>Write-behind</li></ul><h3 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache-Aside Pattern"></a>Cache-Aside Pattern</h3><p>Cache-Aside Pattern，即<strong>旁路缓存模式</strong>，它的提出是为了尽可能地解决缓存与数据库的数据不一致问题。</p><ol><li>读的时候，先读缓存，缓存命中的话，直接返回数据</li><li>缓存没有命中的话，就去读数据库，从数据库取出数据，放入缓存后，同时返回响应。</li></ol><p>更新的时候，先<strong>更新数据库，然后再删除缓存</strong>。</p><h3 id="Read-Through-Write-Through（读写穿透）"><a href="#Read-Through-Write-Through（读写穿透）" class="headerlink" title="Read-Through/Write-Through（读写穿透）"></a>Read-Through/Write-Through（读写穿透）</h3><p><strong>Read/Write-Through</strong>模式中，服务端把缓存作为主要数据存储。应用程序跟数据库缓存交互，都是通过<strong>抽象缓存层</strong>完成的。</p><ol><li>从缓存读取数据，读到直接返回</li><li>如果读取不到的话，从数据库加载，写入缓存后，再返回响应。</li></ol><p>写的时候，添加操作直接加入缓存，更新操作则操作数据源。</p><h3 id="Write-behind-（异步缓存写入）"><a href="#Write-behind-（异步缓存写入）" class="headerlink" title="Write-behind （异步缓存写入）"></a>Write-behind （异步缓存写入）</h3><p><strong>Write-behind</strong> 跟Read-Through/Write-Through有相似的地方，都是由<strong>Cache Provider</strong>来负责缓存和数据库的读写。它们又有个很大的不同：<strong>Read/Write-Through</strong>是同步更新缓存和数据的，<strong>Write-Behind</strong>则是只更新缓存，不直接更新数据库，通过<strong>批量异步</strong>的方式来更新数据库。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;三个经典的缓存模式&quot;&gt;&lt;a href=&quot;#三个经典的缓存模式&quot; class=&quot;headerlink&quot; title=&quot;三个经典的缓存模式&quot;&gt;&lt;/a&gt;&lt;strong&gt;三个经典的缓存模式&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;缓存可以提升性能、缓解数据库压力，但是使用缓存也会</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>math</title>
+    <link href="http://example.com/post/a927044d.html"/>
+    <id>http://example.com/post/a927044d.html</id>
+    <published>2023-04-05T14:19:07.874Z</published>
+    <updated>2023-04-05T14:24:27.256Z</updated>
+    
+    <content type="html"><![CDATA[<p>如 $\lim_{x \to 0} \frac{\sin x}{x}$ 渲染的是</p><p>$$<br>\begin{eqnarray}<br> \lim_{x \to 0} \frac{\sin x + x^2 + x^3}{x} &amp; = &amp; \lim_{x \to 0} \frac{\sin x }{x} + \lim_{x \to 0} \frac{x^2 }{x} + \lim_{x \to 0}\frac{x^3}{x}<br>\\ &amp; = &amp; \lim_{x \to 0}\frac{\sin x}{x}<br>\\ &amp; = &amp; 1<br>\end{eqnarray}<br>$$</p><span id="more"></span><p>斐波那契数列$A_n=A_{n-1}+A_{n-2}$,前后两项的比值逐渐收敛到黄金分割比例<br>$$\lim_{n\to \infty}\frac{A_{n-1}}{A_n}=\frac{\sqrt{5}-1}{2}.$$</p><p>因式分解<br>$$\begin{split}(x−1)(x−3)&amp;=x^2−4x+3 \<br>&amp;=x^2−4x+4−1 \<br>&amp;=(x−2)^2−1<br>\end{split}<br>$$</p><p>狄利克雷函数</p><p>$$<br>D(x)=<br>\begin{cases}<br>1,&amp; x \in Q \<br>0,&amp; x \notin Q<br>\end{cases}<br>$$</p><p>高斯公式<br>$$<br>\iiint_{\Omega}\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right) d v=\iint_{\Sigma} P d y d z+Q d z d x+R d x d y<br>$$</p><h2 id="物理公式"><a href="#物理公式" class="headerlink" title="物理公式"></a>物理公式</h2><ul><li>牛顿第一定律: $\sum \vec{F}_{i}=\frac{\mathrm{d} \vec{v}}{\mathrm{d} t}=0$</li><li>牛顿第二定律: $\vec{F}=\frac{\mathrm{d} m}{\mathrm{d} t} \vec{v}+m \frac{\mathrm{d} \vec{v}}{\mathrm{d} t}=\frac{\mathrm{d} m}{\mathrm{d} t} \vec{v}+m \vec{a}=\frac{\mathrm{d} m}{\mathrm{d} t} \vec{v}+m \frac{\mathrm{d}^{2} \vec{r}}{\mathrm{d} t^{2}}$</li><li>牛顿第三定律: $\overrightarrow{F_{12}}=-\overrightarrow{F_{21}}$</li><li>质能守恒: $E=mc^2$</li></ul><h2 id="化学公式"><a href="#化学公式" class="headerlink" title="化学公式"></a>化学公式</h2><p>离子反应与沉淀: $\ce{SO4^2- + Ba^2+ -&gt; BaSO4 v}$</p><h2 id="生物公式"><a href="#生物公式" class="headerlink" title="生物公式"></a>生物公式</h2><p>光合作用<br>范德蒙行列式<br>$$D_{n-1}=\left|\begin{array}{cccc}<br>1 &amp; 1 &amp; \dots &amp; 1 \<br>x_{2} &amp; x_{3} &amp; \dots &amp; x_{n} \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>x_{2}^{n-2} &amp; x_{3}^{n-2} &amp; \dots &amp; x_{n}^{n-2}<br>\end{array}\right|=\prod_{2 \leq j&lt;i \leq n}\left(x_{i}-x_{j}\right)$$</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;如 $\lim_{x \to 0} \frac{\sin x}{x}$ 渲染的是&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\begin{eqnarray}&lt;br&gt; \lim_{x \to 0} \frac{\sin x + x^2 + x^3}{x} &amp;amp; = &amp;amp; \lim_{x \to 0} \frac{\sin x }{x} + \lim_{x \to 0} \frac{x^2 }{x} + \lim_{x \to 0}\frac{x^3}{x}&lt;br&gt;\\ &amp;amp; = &amp;amp; \lim_{x \to 0}\frac{\sin x}{x}&lt;br&gt;\\ &amp;amp; = &amp;amp; 1&lt;br&gt;\end{eqnarray}&lt;br&gt;$$&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="math" scheme="http://example.com/categories/math/"/>
+    
+    
+    <category term="math" scheme="http://example.com/tags/math/"/>
+    
+  </entry>
+  
+</feed>
