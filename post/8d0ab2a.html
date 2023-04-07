@@ -7,23 +7,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <meta http-equiv="Content-Language" content="zh-cn">
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>redis和mysql双写一致性 | 德容的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <meta name="description" content="三个经典的缓存模式缓存可以提升性能、缓解数据库压力，但是使用缓存也会导致数据不一致性的问题。有三种经典的缓存使用模式：  Cache-Aside Pattern Read-Through&#x2F;Write-through Write-behind  Cache-Aside PatternCache-Aside Pattern，即旁路缓存模式，它的提出是为了尽可能地解决缓存与数据库的数据不一致问题。  读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/post/0.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:title" content="redis和mysql双写一致性">
+<meta property="og:url" content="http://example.com/post/8d0ab2a.html">
+<meta property="og:site_name" content="德容的博客">
 <meta property="og:description" content="三个经典的缓存模式缓存可以提升性能、缓解数据库压力，但是使用缓存也会导致数据不一致性的问题。有三种经典的缓存使用模式：  Cache-Aside Pattern Read-Through&#x2F;Write-through Write-behind  Cache-Aside PatternCache-Aside Pattern，即旁路缓存模式，它的提出是为了尽可能地解决缓存与数据库的数据不一致问题。  读">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-05T15:47:23.745Z">
-<meta property="article:modified_time" content="2023-04-05T15:48:07.294Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:published_time" content="2023-04-05T16:00:38.000Z">
+<meta property="article:modified_time" content="2023-04-05T16:09:18.508Z">
+<meta property="article:author" content="frenkie">
+<meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
   
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="德容的博客" type="application/atom+xml">
   
   
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
@@ -96,11 +97,11 @@ var _hmt = _hmt || [];
 		</a>
 		
 		<hgroup>
-		  <div class="header-author"><a href="/">new-yilia</a></div>
+		  <div class="header-author"><a href="/">德容</a></div>
 		</hgroup>
 		
 		
-		<p class="header-subtitle">一个简洁优雅的hexo主题</p>
+		<p class="header-subtitle">丢人的个人博客</p>
 		
 
 		<nav class="header-menu">
@@ -153,7 +154,7 @@ var _hmt = _hmt || [];
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/ProphetMalzahar" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="gitee" target="_blank" href="#" title="gitee"><i class="icon-gitee"></i></a>
 		        
@@ -163,12 +164,15 @@ var _hmt = _hmt || [];
 		        
 					<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
 		        
-					<a class="mail" target="_blank" href="mailto:XXX@XXX.com" title="mail"><i class="icon-mail"></i></a>
-		        
 			</div>
 		</nav>
 		
 		<!-- 网易云音乐插件 -->
+		
+			<br><br>
+			<div style="position:absolute; bottom:120px left:auto; width:100%">
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1342950406&auto=1&height=32"></iframe>
+			</div>
 		
 			
 		<!--时钟-->
@@ -234,17 +238,17 @@ var _hmt = _hmt || [];
 			</a>
 			
 			<hgroup>
-			  <div class="header-author js-header-author">new-yilia</div>
+			  <div class="header-author js-header-author">德容</div>
 			</hgroup>
 			
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>一个简洁优雅的hexo主题<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>丢人的个人博客<i class="icon icon-quo-right"></i></p>
 			
 			
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/ProphetMalzahar" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="gitee" target="_blank" href="#" title="gitee"><i class="icon-gitee"></i></a>
 			        
@@ -253,8 +257,6 @@ var _hmt = _hmt || [];
 						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
 			        
 						<a class="rss" target="_blank" href="/atom.xml" title="rss"><i class="icon-rss"></i></a>
-			        
-						<a class="mail" target="_blank" href="mailto:XXX@XXX.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -311,6 +313,90 @@ var _hmt = _hmt || [];
             <article id="post-redis和mysql双写一致性" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title_code_ant" itemprop="name">
+	  <a href="/post/8d0ab2a.html">redis和mysql双写一致性</a>
+	</h1>
+  
+
+        
+		
+		  <a href="/post/8d0ab2a.html" class="archive-article-date">
+  	<time datetime="2023-04-05T16:00:38.000Z" itemprop="datePublished">
+	<!-- <i class="icon-calendar icon"></i> -->
+
+	<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+	&nbsp;
+	2023-04-06</time>
+	
+	<!-- busuanzi阅读量统计
+	
+	<span>
+		&nbsp; &nbsp; &nbsp;
+		<span class="post-meta-item-text">阅读量:</span>
+		<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+		<span class="post-meta-item-text">次</span>
+	</span>
+	
+	-->
+	
+    <!-- waline阅读量统计 -->
+	
+	<span>
+		&nbsp; &nbsp; &nbsp;
+		<i class="fa fa-eye" aria-hidden="true"></i>
+		&nbsp;
+		<span class="waline-pageview-count" data-path="/post/8d0ab2a.html"><i class="fa fa-spinner fa-spin"></i></span>
+	</span>
+	
+
+</a>
+
+
+        
+		
+		
+		  <!-- 添加标题栏文字统计效果 -->
+<div class="word-count">
+	
+      
+        <span class="article-type" style="
+          color: white;
+          font-size: 14px;
+          background: #0088CC;
+          padding: 0 5px 1px 5px;
+          margin-right: 5px;
+          border-radius: 2px;">原创</span>
+		  &nbsp; 
+      
+    
+	
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+	    <i class="fa fa-bar-chart" aria-hidden="true"></i>
+        <!-- <i class="fa fa-keyboard-o" aria-hidden="true"></i> -->
+        <span class="post-meta-item-text">字数统计: </span>
+        <span class="post-count">381字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+	    <i class="fa fa-pagelines" aria-hidden="true"></i>
+        <span class="post-meta-item-text">阅读时长: </span>
+        <span class="post-count">1min</span>
+      </span>
+    </span>
+	
+
+</div>
+<!-- 添加标题栏文字统计效果结束 -->
+		
+      </header>
+    
 	
     <div class="article-entry" itemprop="articleBody">
 	  <!-- 添加分类与标签 -->
@@ -318,11 +404,11 @@ var _hmt = _hmt || [];
 		  
 		  <h2 id="三个经典的缓存模式"><a href="#三个经典的缓存模式" class="headerlink" title="三个经典的缓存模式"></a><strong>三个经典的缓存模式</strong></h2><p>缓存可以提升性能、缓解数据库压力，但是使用缓存也会导致数据<strong>不一致性</strong>的问题。有三种经典的缓存使用模式：</p>
 <ul>
-<li>Cache-Aside Pattern</li>
-<li>Read-Through/Write-through</li>
-<li>Write-behind</li>
+<li><strong>Cache-Aside Pattern</strong></li>
+<li><strong>Read-Through/Write-through</strong></li>
+<li><strong>Write-behind</strong></li>
 </ul>
-<h3 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache-Aside Pattern"></a>Cache-Aside Pattern</h3><p>Cache-Aside Pattern，即<strong>旁路缓存模式</strong>，它的提出是为了尽可能地解决缓存与数据库的数据不一致问题。</p>
+<h3 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache-Aside Pattern"></a>Cache-Aside Pattern</h3><p><strong>Cache-Aside Pattern</strong>，即<strong>旁路缓存模式</strong>，它的提出是为了尽可能地解决缓存与数据库的数据不一致问题。</p>
 <ol>
 <li>读的时候，先读缓存，缓存命中的话，直接返回数据</li>
 <li>缓存没有命中的话，就去读数据库，从数据库取出数据，放入缓存后，同时返回响应。</li>
@@ -334,7 +420,7 @@ var _hmt = _hmt || [];
 <li>如果读取不到的话，从数据库加载，写入缓存后，再返回响应。</li>
 </ol>
 <p>写的时候，添加操作直接加入缓存，更新操作则操作数据源。</p>
-<h3 id="Write-behind-（异步缓存写入）"><a href="#Write-behind-（异步缓存写入）" class="headerlink" title="Write-behind （异步缓存写入）"></a>Write-behind （异步缓存写入）</h3><p><strong>Write-behind</strong> 跟Read-Through/Write-Through有相似的地方，都是由<strong>Cache Provider</strong>来负责缓存和数据库的读写。它们又有个很大的不同：<strong>Read/Write-Through</strong>是同步更新缓存和数据的，<strong>Write-Behind</strong>则是只更新缓存，不直接更新数据库，通过<strong>批量异步</strong>的方式来更新数据库。</p>
+<h3 id="Write-behind-（异步缓存写入）"><a href="#Write-behind-（异步缓存写入）" class="headerlink" title="Write-behind （异步缓存写入）"></a>Write-behind （异步缓存写入）</h3><p><strong>Write-behind</strong> 跟<strong>Read-Through/Write-Through</strong>有相似的地方，都是由<strong>Cache Provider</strong>来负责缓存和数据库的读写。它们又有个很大的不同：<strong>Read/Write-Through</strong>是同步更新缓存和数据的，<strong>Write-Behind</strong>则是只更新缓存，不直接更新数据库，通过<strong>批量异步</strong>的方式来更新数据库。</p>
 
 				  
 	  
@@ -375,24 +461,24 @@ var _hmt = _hmt || [];
 <div class="declare">
 	<strong class="author">本文作者：</strong>
 	
-	  John Doe
+	  frenkie
 	
 	
 	<!-- <br>
 	<strong class="create-time">发布时间：</strong>
-	2023-04-05 -->
+	2023-04-06 -->
 	
 	<br>
 	<strong class="update-time">最后更新：</strong>
-	2023年04月05日 23:48:07
+	2023年04月06日 00:09:18
 	
 	<!-- <br>
 	<strong class="article-titles">本文标题：</strong>
-	<a href="http://example.com/post/0.html" title="" target="_blank"></a> -->
+	<a href="http://example.com/post/8d0ab2a.html" title="redis和mysql双写一致性" target="_blank">redis和mysql双写一致性</a> -->
 	
 	<br>
 	<strong class="article-url">本文链接：</strong>
-	<a href="http://example.com/post/0.html" title="" target="_blank">http://example.com/post/0.html</a>
+	<a href="http://example.com/post/8d0ab2a.html" title="redis和mysql双写一致性" target="_blank">http://example.com/post/8d0ab2a.html</a>
 	
 	<br>
 	<strong class="copyright">版权声明：</strong>
@@ -413,6 +499,17 @@ var _hmt = _hmt || [];
 	  
 	  <!-- 分类页 -->
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
 	  
@@ -466,7 +563,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-	  <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/post/0.html" alt="微信分享二维码">
+	  <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/post/8d0ab2a.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -636,7 +733,7 @@ var _hmt = _hmt || [];
 		  <script>
 			var now = new Date(); 
 			function createtime() { 
-				var grt= new Date('01/01/1970 00:00:00');//此处修改为网站上线时间 
+				var grt= new Date('04/05/2023 00:00:00');//此处修改为网站上线时间 
 				now.setTime(now.getTime()+250); 
 				days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
 				hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
@@ -656,23 +753,12 @@ var _hmt = _hmt || [];
       <div class="footer-center">
 	    <i class="fa fa-copyright" aria-hidden="true"></i> 
 		<!-- &copy; -->
-        1970-2023 John Doe
-		 
-		  <span class="post-meta-divider">|</span>
-		  <a style="color:#1A1A1A" target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">陕ICP备XXX号</a>
+        2023-2023 frenkie
 		
       </div>
 	  <!-- 备案信息结束 -->
 	  
       <!-- 又拍云支持 -->
-	   
-	  <div class="footer-support">
-	    <span>本网站由</span>
-		<a style="margin: .2rem;" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="blank" title="又拍云" rel="external nofollow">
-		  <img height="30" src="https://qiniu.findn.cn/blog/photos/static/youpaiyun.png" alt="又拍云">
-		</a>
-		<span>提供 CDN 加速</span>
-	  </div>
 	  
 	  <!-- 又拍云支持结束 -->
 	  
@@ -825,6 +911,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">math</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -875,14 +965,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="https://sanshui.findn.cn/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>三水のBlog</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://findn.cn/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>三水的笔记</a>
-            </li>
-          
-            <li class="search-li">
               <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
             </li>
           
@@ -928,7 +1010,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 			
 				<br>
 				  
-					<p id="js-aboutme" style="margin:0 20px 0 20px;">new-yilia&lt;br&gt;一个简洁优雅的hexo主题</p>
+					<p id="js-aboutme" style="margin:0 20px 0 20px;">德容&lt;br&gt;一个懒go程序员</p>
 				
 			</div> 
 		</div> 

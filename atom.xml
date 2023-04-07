@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>德容的博客</title>
   
   
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-04-05T15:48:07.294Z</updated>
+  <updated>2023-04-05T16:09:18.508Z</updated>
   <id>http://example.com/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>frenkie</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="http://example.com/post/0.html"/>
-    <id>http://example.com/post/0.html</id>
-    <published>2023-04-05T15:47:23.745Z</published>
-    <updated>2023-04-05T15:48:07.294Z</updated>
+    <title>redis和mysql双写一致性</title>
+    <link href="http://example.com/post/8d0ab2a.html"/>
+    <id>http://example.com/post/8d0ab2a.html</id>
+    <published>2023-04-05T16:00:38.000Z</published>
+    <updated>2023-04-05T16:09:18.508Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="三个经典的缓存模式"><a href="#三个经典的缓存模式" class="headerlink" title="三个经典的缓存模式"></a><strong>三个经典的缓存模式</strong></h2><p>缓存可以提升性能、缓解数据库压力，但是使用缓存也会导致数据<strong>不一致性</strong>的问题。有三种经典的缓存使用模式：</p><ul><li>Cache-Aside Pattern</li><li>Read-Through/Write-through</li><li>Write-behind</li></ul><h3 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache-Aside Pattern"></a>Cache-Aside Pattern</h3><p>Cache-Aside Pattern，即<strong>旁路缓存模式</strong>，它的提出是为了尽可能地解决缓存与数据库的数据不一致问题。</p><ol><li>读的时候，先读缓存，缓存命中的话，直接返回数据</li><li>缓存没有命中的话，就去读数据库，从数据库取出数据，放入缓存后，同时返回响应。</li></ol><p>更新的时候，先<strong>更新数据库，然后再删除缓存</strong>。</p><h3 id="Read-Through-Write-Through（读写穿透）"><a href="#Read-Through-Write-Through（读写穿透）" class="headerlink" title="Read-Through/Write-Through（读写穿透）"></a>Read-Through/Write-Through（读写穿透）</h3><p><strong>Read/Write-Through</strong>模式中，服务端把缓存作为主要数据存储。应用程序跟数据库缓存交互，都是通过<strong>抽象缓存层</strong>完成的。</p><ol><li>从缓存读取数据，读到直接返回</li><li>如果读取不到的话，从数据库加载，写入缓存后，再返回响应。</li></ol><p>写的时候，添加操作直接加入缓存，更新操作则操作数据源。</p><h3 id="Write-behind-（异步缓存写入）"><a href="#Write-behind-（异步缓存写入）" class="headerlink" title="Write-behind （异步缓存写入）"></a>Write-behind （异步缓存写入）</h3><p><strong>Write-behind</strong> 跟Read-Through/Write-Through有相似的地方，都是由<strong>Cache Provider</strong>来负责缓存和数据库的读写。它们又有个很大的不同：<strong>Read/Write-Through</strong>是同步更新缓存和数据的，<strong>Write-Behind</strong>则是只更新缓存，不直接更新数据库，通过<strong>批量异步</strong>的方式来更新数据库。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="三个经典的缓存模式"><a href="#三个经典的缓存模式" class="headerlink" title="三个经典的缓存模式"></a><strong>三个经典的缓存模式</strong></h2><p>缓存可以提升性能、缓解数据库压力，但是使用缓存也会导致数据<strong>不一致性</strong>的问题。有三种经典的缓存使用模式：</p><ul><li><strong>Cache-Aside Pattern</strong></li><li><strong>Read-Through/Write-through</strong></li><li><strong>Write-behind</strong></li></ul><h3 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache-Aside Pattern"></a>Cache-Aside Pattern</h3><p><strong>Cache-Aside Pattern</strong>，即<strong>旁路缓存模式</strong>，它的提出是为了尽可能地解决缓存与数据库的数据不一致问题。</p><ol><li>读的时候，先读缓存，缓存命中的话，直接返回数据</li><li>缓存没有命中的话，就去读数据库，从数据库取出数据，放入缓存后，同时返回响应。</li></ol><p>更新的时候，先<strong>更新数据库，然后再删除缓存</strong>。</p><h3 id="Read-Through-Write-Through（读写穿透）"><a href="#Read-Through-Write-Through（读写穿透）" class="headerlink" title="Read-Through/Write-Through（读写穿透）"></a>Read-Through/Write-Through（读写穿透）</h3><p><strong>Read/Write-Through</strong>模式中，服务端把缓存作为主要数据存储。应用程序跟数据库缓存交互，都是通过<strong>抽象缓存层</strong>完成的。</p><ol><li>从缓存读取数据，读到直接返回</li><li>如果读取不到的话，从数据库加载，写入缓存后，再返回响应。</li></ol><p>写的时候，添加操作直接加入缓存，更新操作则操作数据源。</p><h3 id="Write-behind-（异步缓存写入）"><a href="#Write-behind-（异步缓存写入）" class="headerlink" title="Write-behind （异步缓存写入）"></a>Write-behind （异步缓存写入）</h3><p><strong>Write-behind</strong> 跟<strong>Read-Through/Write-Through</strong>有相似的地方，都是由<strong>Cache Provider</strong>来负责缓存和数据库的读写。它们又有个很大的不同：<strong>Read/Write-Through</strong>是同步更新缓存和数据的，<strong>Write-Behind</strong>则是只更新缓存，不直接更新数据库，通过<strong>批量异步</strong>的方式来更新数据库。</p>]]></content>
     
     
       
@@ -33,6 +33,10 @@
     
     
     
+    <category term="redis" scheme="http://example.com/categories/redis/"/>
+    
+    
+    <category term="redis" scheme="http://example.com/tags/redis/"/>
     
   </entry>
   
