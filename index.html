@@ -168,7 +168,7 @@ var _hmt = _hmt || [];
 		
 			<br><br>
 			<div style="position:absolute; bottom:120px left:auto; width:100%">
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1342950406&auto=1&height=32"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1376142151&auto=1&height=32"></iframe>
 			</div>
 		
 			
@@ -308,6 +308,170 @@ var _hmt = _hmt || [];
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-用openai的接口试试画图" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title_code_ant" href="/post/3eed34e4.html">用openai的接口试试画图</a>
+    </h2>
+  
+
+        
+		
+		  <a href="/post/3eed34e4.html" class="archive-article-date">
+  	<time datetime="2023-04-08T05:03:45.000Z" itemprop="datePublished">
+	<!-- <i class="icon-calendar icon"></i> -->
+
+	<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+	&nbsp;
+	2023-04-08</time>
+	
+	<!-- busuanzi阅读量统计
+	
+	-->
+	
+    <!-- waline阅读量统计 -->
+	
+
+</a>
+
+
+        
+		
+		
+		  <!-- 添加标题栏文字统计效果 -->
+<div class="word-count">
+	
+      
+        <span class="article-type" style="
+          color: white;
+          font-size: 14px;
+          background: #0088CC;
+          padding: 0 5px 1px 5px;
+          margin-right: 5px;
+          border-radius: 2px;">原创</span>
+		  &nbsp; 
+      
+    
+	
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+	    <i class="fa fa-bar-chart" aria-hidden="true"></i>
+        <!-- <i class="fa fa-keyboard-o" aria-hidden="true"></i> -->
+        <span class="post-meta-item-text">字数统计: </span>
+        <span class="post-count">407字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+	    <i class="fa fa-pagelines" aria-hidden="true"></i>
+        <span class="post-meta-item-text">阅读时长: </span>
+        <span class="post-count">2min</span>
+      </span>
+    </span>
+	
+
+</div>
+<!-- 添加标题栏文字统计效果结束 -->
+		
+      </header>
+    
+	
+    <div class="article-entry" itemprop="articleBody">
+	  <!-- 添加分类与标签 -->
+	  
+		  
+		  <p>一、准备工作</p>
+<p>首先肯定得有openai的账号和key，调这个接口有时不需要魔法，但是最好还是开一下，然后走代理的接口。</p>
+<p>二、编码</p>
+<p>先写个service类和impl吧，其实一个util类应该就够了，写一个service和serviceImpl有点脱裤子放屁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PicServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">PicService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * openai url</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">OPEN_AI_URL</span> <span class="operator">=</span> <span class="string">&quot;https://api.openai.com/v1/images/generations&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 你的openai key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">API_KEY</span> <span class="operator">=</span> <span class="string">&quot;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&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">generations</span><span class="params">(String prompt, <span class="type">int</span> num, String size)</span> &#123;</span><br><span class="line">        RestTemplate restTemplate;</span><br><span class="line">        <span class="type">HttpHeaders</span> <span class="variable">headers</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpHeaders</span>();</span><br><span class="line">        headers.setContentType(MediaType.APPLICATION_JSON);</span><br><span class="line">        headers.set(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;Bearer &quot;</span> + API_KEY);</span><br><span class="line">        <span class="comment">// We are including only some parameters to the json request</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">requestJson</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;prompt\&quot;:\&quot;&quot;</span> + prompt + <span class="string">&quot;\&quot;,\&quot;n\&quot;:&quot;</span> + num + <span class="string">&quot;,\&quot;size\&quot;:\&quot;&quot;</span> + size +<span class="string">&quot;\&quot;&quot;</span>+ <span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line">        HttpEntity&lt;String&gt; request = <span class="keyword">new</span> <span class="title class_">HttpEntity</span>&lt;&gt;(requestJson, headers);</span><br><span class="line">        <span class="comment">//直接访问有问题需要走代理，具体接口自行修改</span></span><br><span class="line">        <span class="type">Proxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Proxy</span>(Proxy.Type.HTTP, <span class="keyword">new</span> <span class="title class_">InetSocketAddress</span>(<span class="string">&quot;localhost&quot;</span>, <span class="number">7890</span>));</span><br><span class="line">        <span class="type">SimpleClientHttpRequestFactory</span> <span class="variable">requestFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleClientHttpRequestFactory</span>();</span><br><span class="line">        requestFactory.setProxy(proxy);</span><br><span class="line">        restTemplate = <span class="keyword">new</span> <span class="title class_">RestTemplate</span>(requestFactory);</span><br><span class="line">        ResponseEntity&lt;String&gt; response = restTemplate.postForEntity(OPEN_AI_URL, request, String.class);</span><br><span class="line">        <span class="keyword">return</span> response.getBody();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后是controller类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OpenAiController</span> &#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> PicService picService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生成图片接口</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> prompt 图片关键词</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> num    生成数量</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> size   图片大小 如1024×1024</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 图片</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/generations&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">generations</span><span class="params">(<span class="meta">@RequestParam(&quot;prompt&quot;)</span> String prompt,</span></span><br><span class="line"><span class="params">                              <span class="meta">@RequestParam(&quot;num&quot;)</span> <span class="type">int</span> num,</span></span><br><span class="line"><span class="params">                              <span class="meta">@RequestParam(&quot;size&quot;)</span> String size)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> picService.generations(prompt, num, size);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们直接在postman之类的工具里面调用<strong><a target="_blank" rel="noopener" href="http://localhost:8080/generations">http://localhost:8080/generations</a></strong></p>
+<p>即可。很便捷就可以使用openai的接口生成图片了。</p>
+<p>因为GitHub.io上传图片好麻烦，就不展示图片了。</p>
+<p>GitHub项目地址：<a target="_blank" rel="noopener" href="https://github.com/ProphetMalzahar/openAIPic"><a target="_blank" rel="noopener" href="https://github.com/ProphetMalzahar/openAIPic">ProphetMalzahar/openAIPic: openai图片生成项目 (github.com)</a></a></p>
+
+				  
+	  
+      
+	  <!-- 添加打赏 -->
+	  
+	
+	  <!-- 添加版权声明 -->
+      
+	  
+	</div>
+	
+	<!-- 添加置顶 -->
+    <div class="article-info article-info-index">
+      
+	  
+	  <!-- 分类页 -->
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">openai</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+	  
+	  <!-- 添加展开全文 -->
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/post/3eed34e4.html">展开全文 >></a>
+        </p>
+      
+	  
+	  <!-- 添加分享 -->
+      
+	  
+      <div class="clearfix"></div>
+	  
+    </div>
+  </div>
+</article>
+
+
+
+<!-- 添加回到顶部和文章目录 -->
+<aside class="wrap-side-operation">
+  <div class="mod-side-operation">
+    
+      <div class="jump-container" id="js-jump-container" style="display:none;">
+        <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+          <i class="icon-font icon-back"></i>
+        </a>
+      </div>
+    
+    
+  </div>
+</aside>
+
+<!-- 添加评论 -->
+
+
+<!-- 文章页添加mathjax公式 -->
+
+  
+
+<!-- 文章页添加mathjax公式 -->
   
     <article id="post-redis和mysql双写一致性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -682,10 +846,10 @@ window.MathJax = {
 	  <br>
 	  <div class="footer-center">
 	    <i class="fa fa-file-word-o" aria-hidden="true"></i>
-		<span> 2 篇</span>
+		<span> 3 篇</span>
 		<span class="post-meta-divider">|</span>
 		<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-		<span> <span class="post-count">783</span></span>
+		<span> <span class="post-count">1.2k</span></span>
       </div>
 	  
 	  <!-- 添加不蒜子统计 -->
@@ -891,6 +1055,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">openai</a>
               </li>
             
             <div class="clearfix"></div>
